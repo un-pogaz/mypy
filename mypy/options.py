@@ -54,6 +54,7 @@ PER_MODULE_OPTIONS: Final = {
     "strict_concatenate",
     "strict_equality",
     "strict_optional",
+    "user_builtins_name",
     "warn_no_return",
     "warn_return_any",
     "warn_unreachable",
@@ -136,6 +137,8 @@ class Options:
         self.explicit_package_bases = False
         # File names, directory names or subpaths to avoid checking
         self.exclude: list[str] = []
+        # User defined builtins names to skip name-defined checking
+        self.user_builtins_name: list[str] = []
 
         # disallow_any options
         self.disallow_any_generics = False

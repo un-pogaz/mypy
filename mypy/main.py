@@ -1245,6 +1245,13 @@ def process_options(
         ),
     )
     code_group.add_argument(
+        "--user-builtins-name",
+        action="append",
+        metavar="NAME",
+        default=[],
+        help="List of name to ignore; can repeat for more names",
+    )
+    code_group.add_argument(
         "-m",
         "--module",
         action="append",
