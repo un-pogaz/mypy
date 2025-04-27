@@ -544,6 +544,11 @@ class SemanticAnalyzer(
     def prepare_file(self, file_node: MypyFile) -> None:
         """Prepare a freshly parsed file for semantic analysis."""
         if "builtins" in self.modules:
+            # locate all __builtins__ stub and append them into the native builtins module.
+            exclude_names = ('__package__', '__name__', '__doc__', '__file__', '__spec__', '__annotations__', '__builtins__')
+            for module in filter(lambda x: x.is_stub and x.name == "__builtins__", self.modules.values()):
+                for name in filter(lambda x: x not in exclude_names, module.names):
+                    self.modules["builtins"].names[name] = module.names[name]
             file_node.names["__builtins__"] = SymbolTableNode(GDEF, self.modules["builtins"])
         if file_node.fullname == "builtins":
             self.prepare_builtins_namespace(file_node)
